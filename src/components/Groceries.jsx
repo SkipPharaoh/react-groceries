@@ -58,38 +58,40 @@ const Groceries = [
         isPurchased: false
     },
 ]
+const GroceriesList = (props) => {
 
-const GroceriesList = ({item, brand, price, quantity}) => {
-    const [groceries, setGroceries] = useState(Groceries)
-    const itemArr = Groceries.map((Groceries, index)=>{
-        return <li>{Groceries.item}</li>
-    })
-    const brandArr = Groceries.map((Groceries, index)=>{
-        return <li>{Groceries.brand}</li>
-    })
-    const quantityArr = Groceries.map((Groceries, index)=>{
-        return <li>{Groceries.quantity}</li>
-    })
-    const priceArr = Groceries.map((Groceries, index)=>{
-        return <li>{Groceries.price}</li>
-    })
+    function CalculateTotal() {
+        let total = 0
+        for (let i = 0; i < Groceries.length; i++) {
+            total = total + Groceries[i].price
+        }
+        return total
+    }
+
 
     return (
-        <>
-            <ul>
-                {itemArr}
-            </ul>
-            <ul>
-                {brandArr}
-            </ul>
-            <ul>
-                {quantityArr}
-            </ul>
-            <ul>
-                {priceArr}
-            </ul>
-        </>
+        <div>
+            <div className="listItems">
+                {Groceries.map((item) => {
+
+                    let purchased = "Not Purchased"
+                    if (item.isPurchased === true) {
+                        purchased = "Purchased"
+                    }
+
+                    return (
+                        <ul className='List'>
+                            <li><h4>{item.item}</h4></li>
+                            <li>{item.brand}</li>
+                            <li>{item.quantity}</li>
+                            <li>{item.price}</li>
+                            <li>{purchased}</li>
+                        </ul>
+                    )
+                })}
+            </div>
+            <h3>Total Price:</h3><p>${CalculateTotal().toFixed(2)}</p>
+        </div>
     )
 }
-
 export default GroceriesList
